@@ -109,6 +109,16 @@ const addForm = () => {
     // console.log(columns[3].children[0].textContent);
     return buttons;
 }
+
+//function to delete all inner html elements
+function deleteChild(target) {
+    var child = target.lastElementChild;
+    while (child) {
+        target.removeChild(child);
+        child = target.lastElementChild;
+    }
+}
+
 btnList = addForm();
 let array = [0];
 
@@ -130,9 +140,15 @@ submit.addEventListener('click', function () {
 })
 
 const handleFormSubmit = (n, array) => {
-    let first = document.querySelector('.first');
+    // let first = document.querySelector('.first');
     n = parseInt(n);
-    first.remove();
+    // if (first){
+    //     first.remove();
+    // }
+    let container = document.querySelector('.container1');
+    deleteChild(container);
+    // console.log(container)
+    
     for (let i = 0; i < n; i++) {
         let row = document.createElement('div');
         row.classList.add('row');
@@ -171,7 +187,7 @@ const handleFormSubmit = (n, array) => {
             score.textContent = `Score: `;
             score.append(scoreNum);
             scoreNum.classList.add(`score${i}`);
-        }else{
+        } else {
             score.innerHTML = array[i];
         };
         score.style = "margin-left:50px;";
@@ -247,11 +263,18 @@ save.addEventListener('click', function () {
 let resume = document.querySelector('.resume');
 resume.addEventListener('click', function () {
     let num = prompt('Please enter the number of players from previous save');
-    let store = [];
-    for (let i = 0; i < num; i++) {
-        let val = localStorage.getItem(`Player ${i + 1}`);
-        store.push(val);
-    };
-    // console.log(store);
-    handleFormSubmit(num, store);
+    if (num <= localStorage.length) {
+        let store = [];
+        for (let i = 0; i < num; i++) {
+            let val = localStorage.getItem(`Player ${i + 1}`);
+            store.push(val);
+        };
+        handleFormSubmit(num, store);
+    }
+
 });
+
+let restart = document.querySelector('.restart');
+restart.addEventListener('click', function(){
+    location.reload();
+})
