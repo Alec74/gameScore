@@ -5,8 +5,7 @@ let submit = document.querySelector('.submit');
 let container = document.querySelector('.container');
 let scoreInput = document.querySelector('.scoreInput');
 let closeScore = document.querySelector('.closeScore')
-// scoreInput.inputMode = 5
-// console.log(scoreInput)
+// let playerNameForm = document.querySelector('.playerName');
 
 const makeCol = (a, b, buttons) => {
     // let columns = [];
@@ -63,6 +62,7 @@ const addForm = () => {
     let btn1 = document.createElement('button');
     let minus = document.createElement('i');
     btn1.classList.add('btn');
+    btn1.classList.add('btn-danger');
     btn1.classList.add('minus');
     btn1.setAttribute('data-dismiss', 'modal')
     minus.classList.add('fa-solid');
@@ -73,6 +73,7 @@ const addForm = () => {
     let btn2 = document.createElement('button');
     let plus = document.createElement('i');
     btn2.classList.add('btn');
+    btn2.classList.add('btn-success');
     btn2.classList.add('plus');
     btn2.setAttribute('data-dismiss', 'modal')
     plus.classList.add('fa-solid');
@@ -109,7 +110,7 @@ const addForm = () => {
     // console.log(columns[3].children[0].textContent);
     return buttons;
 }
-
+// let num = 0;
 //function to delete all inner html elements
 function deleteChild(target) {
     var child = target.lastElementChild;
@@ -134,8 +135,10 @@ removePlayer.addEventListener('click', function () {
     }
 })
 
-submit.addEventListener('click', function () {
-    let num = numPlayers.textContent;
+let form = document.querySelector('.form');
+form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    num = numPlayers.textContent;
     handleFormSubmit(num, array);
 })
 
@@ -156,6 +159,7 @@ const handleFormSubmit = (n, array) => {
         col.classList.add('col-sm');
         let card = document.createElement('div');
         card.classList.add('card');
+        card.classList.add('text-center');
         let cardBody = document.createElement('div');
         cardBody.classList.add('card-body');
         let player = document.createElement('div');
@@ -163,9 +167,22 @@ const handleFormSubmit = (n, array) => {
         player.classList.add('players');
         // player.classList.add(`player${i+1}`);
 
-        let indPlayer = document.createElement('strong');
+        let indPlayer = document.createElement('a');
+        indPlayer.setAttribute('data-target', '#nameModal');
+        indPlayer.setAttribute('data-toggle', 'modal');
+        indPlayer.setAttribute('id', 'modal-link');
+        indPlayer.classList.add('indPlayers');
+        indPlayer.classList.add('modalbtn');
         indPlayer.classList.add(`player${i + 1}`);
         indPlayer.textContent = `Player ${i + 1}`;
+        indPlayer.href = '#';
+        indPlayer.addEventListener('click', function(){
+            // console.log(indPlayer.classList);
+            let nameTitleEl = document.querySelector(`.name-title`);
+            let modalTitle = `${indPlayer.textContent}`;
+            nameTitleEl.textContent = modalTitle;
+            nameTitleEl.classList.add(`player${i+1}`);
+        });
         let add = document.createElement('button');
         add.classList.add('btn');
         add.classList.add('btn-info');
@@ -212,17 +229,16 @@ const handleFormSubmit = (n, array) => {
     }
 };
 
-// closeScore.addEventListener('click', function(){
-// let num = 
-// let playerNum = document.querySelector('.modal-title');
-// playerNum = playerNum.textContent[playerNum.textContent.length-1];
-// // console.log(playerNum);
-// let indScore = document.querySelector(`.score${playerNum-1}`);
-// indScore.textContent = `Score: ${scoreInput.textContent}`;
-// scoreInput.textContent = 0;
-// console.log(score.previousElementSibling)
-// console.log(score)
-// });
+closeScore.addEventListener('click', function(e){
+    e.preventDefault();
+    scoreInput.textContent = '0';
+})
+
+let clearScore = document.querySelector('.clearScore');
+clearScore.addEventListener('click', function(e){
+    e.preventDefault();
+    scoreInput.textContent = '0';
+})
 
 let btnPlus = document.querySelector('.plus');
 btnPlus.addEventListener('click', function () {
@@ -250,7 +266,9 @@ btnMinus.addEventListener('click', function () {
 
 let save = document.querySelector('.save');
 save.addEventListener('click', function () {
-    localStorage.clear();
+    // console.log(document.querySelectorAll('.players'))
+    if (document.querySelectorAll('.players').length > 0){
+        localStorage.clear();
     let rows = document.querySelectorAll('.players');
     // console.log(rows[0].children[0].textContent)
     for (let i = 0; i < rows.length; i++) {
@@ -258,12 +276,13 @@ save.addEventListener('click', function () {
         localStorage.setItem(`${rows[i].children[0].textContent}`, `${rows[i].children[2].innerHTML}`);
     }
     alert(`Your game with ${rows.length} players has been saved`)
+    }
 })
 
 let resume = document.querySelector('.resume');
 resume.addEventListener('click', function () {
     let num = prompt('Please enter the number of players from previous save');
-    if (num <= localStorage.length) {
+    if (num <= localStorage.length && num > 0) {
         let store = [];
         for (let i = 0; i < num; i++) {
             let val = localStorage.getItem(`Player ${i + 1}`);
@@ -277,4 +296,22 @@ resume.addEventListener('click', function () {
 let restart = document.querySelector('.restart');
 restart.addEventListener('click', function(){
     location.reload();
+})
+
+// console.log(playerNameForm);
+let playerNameSubmit = document.querySelector('.playerNameSubmit');
+
+playerNameSubmit.addEventListener('click', function(e){
+    e.preventDefault();
+    let nameTitleEl = document.querySelector(`.name-title`);
+    let text = document.querySelector('#playerName');
+    let check = document.querySelectorAll('.indPlayers');
+    for (let i = 0; i < check.length; i++){
+        // let player = check[i].getAttribute('class');
+        if(nameTitleEl.classList.contains(`player${i+1}`)){
+            nameTitleEl.classList.remove(`player${i+1}`);
+            check[i].textContent = text.value;
+            text.value = '';
+        }
+    }
 })

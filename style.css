@@ -1,3 +1,15 @@
 .hide {
     display: none;
 }
+
+.indPlayers {
+    font-weight: bold;
+}
+
+.nav-link {
+    color: white;
+}
+
+.nav-link:hover{
+    color: white;
+}

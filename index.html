@@ -11,19 +11,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
         integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <header style="margin-bottom:100px;">
-        <ul class="nav nav-tabs justify-content-center">
+        <ul class="nav nav-tabs nav-light bg-dark justify-content-center">
             <li class="nav-item">
-                <a class="nav-link save"  style="margin-right:50px;" href="#">Save</a>
+                <a class="nav-link save" style="margin-right:50px;" href="#">Save</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link restart"  style="margin-left:50px;" href="#">Restart</a>
+                <a class="nav-link restart" style="margin-left:50px;" href="#">Restart</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link resume"  style="margin-left:50px;" href="#">Resume</a>
+                <a class="nav-link resume" style="margin-left:50px;" href="#">Resume</a>
             </li>
         </ul>
     </header>
@@ -52,48 +53,46 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="row">
-                <div class="col-sm">
-                    <div class="card">
-                        <div class="card-body">
-
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class="row">
-                <div class="col-sm">
-                    <div class="card">
-                        <div class="card-body">
-
-                        </div>
-                    </div>
-                </div>
-            </div> -->
         </div>
+        <!-- Modal to add score -->
         <div class="modal fade" id="playerModal" tabindex="-1" aria-labelledby="playerModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-                <!-- {{#each messages}} -->
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title font-title" id="playerModalLabel">Player</h5>
+                        <button type="button" class="btn btn-warning clearScore">Clear</button>
                         <button type="button" class="btn btn-secondary closeScore" data-dismiss="modal">Close</button>
                     </div>
                     <div class="storage modal-body font-text">
-                        <!-- <p>{{{this.content}}}</p> -->
                         <h1 class="scoreInput" style="text-align: center;">
                             0
                         </h1>
-
                     </div>
                 </div>
-                <!-- {{/each}} -->
+            </div>
+        </div>
+        <!-- Modal to change player names -->
+        <div class="modal fade" id="nameModal" tabindex="-1" aria-labelledby="nameModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title font-title name-title" id="nameModalLabel">Player</h5>
+                        <button type="button" class="btn btn-secondary closeName" data-dismiss="modal">Close</button>
+                    </div>
+                    <div class="storage modal-body font-text">
+                        <!-- <form class="playerName"> -->
+                            <div class="mb-3">
+                                <label for="playerName" class="form-label">Player Name</label>
+                                <input type="name" class="form-control" id="playerName" placeholder="">
+                            </div>
+                            <button type="button" class="btn btn-primary mb-3 playerNameSubmit" data-dismiss="modal">Submit</button>
+                        <!-- </form> -->
+                    </div>
+                </div>
             </div>
         </div>
     </main>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
