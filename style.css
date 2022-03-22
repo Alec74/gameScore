@@ -13,3 +13,17 @@
 .nav-link:hover{
     color: white;
 }
+
+.indPlayers {
+    font-size: larger;
+    color: white;
+    background-color: black;
+    border-radius: 4px;
+    font-weight: bold;
+    padding: 10px 10px 10px 10px;
+}
+
+.indPlayers:hover {
+    color: #00ff20;
+    cursor: pointer;
+}

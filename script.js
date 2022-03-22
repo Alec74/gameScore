@@ -142,7 +142,7 @@ form.addEventListener('submit', function (e) {
     handleFormSubmit(num, array);
 })
 
-const handleFormSubmit = (n, array) => {
+const handleFormSubmit = (n, array, names = []) => {
     // let first = document.querySelector('.first');
     n = parseInt(n);
     // if (first){
@@ -151,7 +151,7 @@ const handleFormSubmit = (n, array) => {
     let container = document.querySelector('.container1');
     deleteChild(container);
     // console.log(container)
-    
+
     for (let i = 0; i < n; i++) {
         let row = document.createElement('div');
         row.classList.add('row');
@@ -168,20 +168,25 @@ const handleFormSubmit = (n, array) => {
         // player.classList.add(`player${i+1}`);
 
         let indPlayer = document.createElement('a');
-        indPlayer.setAttribute('data-target', '#nameModal');
-        indPlayer.setAttribute('data-toggle', 'modal');
-        indPlayer.setAttribute('id', 'modal-link');
-        indPlayer.classList.add('indPlayers');
-        indPlayer.classList.add('modalbtn');
-        indPlayer.classList.add(`player${i + 1}`);
-        indPlayer.textContent = `Player ${i + 1}`;
-        indPlayer.href = '#';
-        indPlayer.addEventListener('click', function(){
+        // indPlayer.setAttribute('data-target', '#nameModal');
+        // indPlayer.setAttribute('data-toggle', 'modal');
+        // indPlayer.setAttribute('id', 'modal-link');
+        // indPlayer.classList.add('indPlayers');
+        // indPlayer.classList.add('modalbtn');
+        // indPlayer.classList.add(`player${i + 1}`);
+        if (names.length > 0) {
+            indPlayer.innerHTML = `<span data-target="#nameModal" data-toggle="modal" id="modal-link" class="indPlayers modalbtn player${i + 1}">${names[i]}</span>`;
+        } else {
+            indPlayer.innerHTML = `<span data-target="#nameModal" data-toggle="modal" id="modal-link" class="indPlayers modalbtn player${i + 1}">Player ${i + 1}</span>`;
+        }
+
+        // indPlayer.href = '#';
+        indPlayer.addEventListener('click', function () {
             // console.log(indPlayer.classList);
             let nameTitleEl = document.querySelector(`.name-title`);
             let modalTitle = `${indPlayer.textContent}`;
             nameTitleEl.textContent = modalTitle;
-            nameTitleEl.classList.add(`player${i+1}`);
+            nameTitleEl.classList.add(`player${i + 1}`);
         });
         let add = document.createElement('button');
         add.classList.add('btn');
@@ -189,12 +194,17 @@ const handleFormSubmit = (n, array) => {
         add.classList.add(`add${i}`);
         add.classList.add('addBtn');
         add.classList.add('modalbtn');
+        add.classList.add(`player${i + 1}`);
         add.setAttribute('data-target', '#playerModal');
         add.setAttribute('data-toggle', 'modal');
         add.setAttribute('id', 'modal-link');
         add.setAttribute('type', 'button');
         add.textContent = 'Add';
         add.style = "margin-left:50px;";
+        add.addEventListener('click', function () {
+            let playerNum = document.querySelector('.modal-title');
+            playerNum.classList.add(`player${i + 1}`);
+        })
         let score = document.createElement('strong');
         // score.classList.add(`score${i+1}`);
         // score.textContent = `Score: ${0}`;
@@ -229,13 +239,13 @@ const handleFormSubmit = (n, array) => {
     }
 };
 
-closeScore.addEventListener('click', function(e){
+closeScore.addEventListener('click', function (e) {
     e.preventDefault();
     scoreInput.textContent = '0';
 })
 
 let clearScore = document.querySelector('.clearScore');
-clearScore.addEventListener('click', function(e){
+clearScore.addEventListener('click', function (e) {
     e.preventDefault();
     scoreInput.textContent = '0';
 })
@@ -244,7 +254,17 @@ let btnPlus = document.querySelector('.plus');
 btnPlus.addEventListener('click', function () {
     // console.log(btnPlus.classList);
     let playerNum = document.querySelector('.modal-title');
-    playerNum = playerNum.textContent[playerNum.textContent.length - 1];
+    let rows = document.querySelectorAll('.players');
+    for (let i = 0; i < rows.length; i++) {
+        if (playerNum.classList.contains(`player${i + 1}`)) {
+            // console.log(playerNum.classList.contains(`player${i+1}`));
+            playerNum.classList.remove(`player${i + 1}`);
+            playerNum = i + 1;
+            break;
+        }
+
+    }
+    // playerNum = playerNum.textContent[playerNum.textContent.length - 1];
     let indScore = document.querySelector(`.score${playerNum - 1}`);
     // console.log(indScore);
     let sum = parseInt(indScore.textContent) + parseInt(scoreInput.textContent);
@@ -256,7 +276,17 @@ let btnMinus = document.querySelector('.minus');
 btnMinus.addEventListener('click', function () {
     // console.log(btnPlus.classList);
     let playerNum = document.querySelector('.modal-title');
-    playerNum = playerNum.textContent[playerNum.textContent.length - 1];
+    let rows = document.querySelectorAll('.players');
+    for (let i = 0; i < rows.length; i++) {
+        if (playerNum.classList.contains(`player${i + 1}`)) {
+            // console.log(playerNum.classList.contains(`player${i+1}`));
+            playerNum.classList.remove(`player${i + 1}`);
+            playerNum = i + 1;
+            break;
+        }
+
+    }
+    // playerNum = playerNum.textContent[playerNum.textContent.length - 1];
     let indScore = document.querySelector(`.score${playerNum - 1}`);
     // console.log(indScore);
     let sum = parseInt(indScore.textContent) - parseInt(scoreInput.textContent);
@@ -267,15 +297,15 @@ btnMinus.addEventListener('click', function () {
 let save = document.querySelector('.save');
 save.addEventListener('click', function () {
     // console.log(document.querySelectorAll('.players'))
-    if (document.querySelectorAll('.players').length > 0){
+    if (document.querySelectorAll('.players').length > 0) {
         localStorage.clear();
-    let rows = document.querySelectorAll('.players');
-    // console.log(rows[0].children[0].textContent)
-    for (let i = 0; i < rows.length; i++) {
-        // let num = 
-        localStorage.setItem(`${rows[i].children[0].textContent}`, `${rows[i].children[2].innerHTML}`);
-    }
-    alert(`Your game with ${rows.length} players has been saved`)
+        let rows = document.querySelectorAll('.players');
+        // console.log(rows[0].children[0].textContent)
+        for (let i = 0; i < rows.length; i++) {
+            // let num = 
+            localStorage.setItem(`Player ${i + 1}`, `${rows[i].children[2].innerHTML}<@![split]>${rows[i].children[0].textContent}`);
+        }
+        alert(`Your game with ${rows.length} players has been saved`)
     }
 })
 
@@ -284,32 +314,36 @@ resume.addEventListener('click', function () {
     let num = prompt('Please enter the number of players from previous save');
     if (num <= localStorage.length && num > 0) {
         let store = [];
+        let names = [];
         for (let i = 0; i < num; i++) {
             let val = localStorage.getItem(`Player ${i + 1}`);
-            store.push(val);
+            // console.log(val);
+            let first = val.split('<@![split]>');
+            store.push(first[0]);
+            names.push(first[1]);
         };
-        handleFormSubmit(num, store);
+        handleFormSubmit(num, store, names);
     }
 
 });
 
 let restart = document.querySelector('.restart');
-restart.addEventListener('click', function(){
+restart.addEventListener('click', function () {
     location.reload();
 })
 
 // console.log(playerNameForm);
 let playerNameSubmit = document.querySelector('.playerNameSubmit');
 
-playerNameSubmit.addEventListener('click', function(e){
+playerNameSubmit.addEventListener('click', function (e) {
     e.preventDefault();
     let nameTitleEl = document.querySelector(`.name-title`);
     let text = document.querySelector('#playerName');
     let check = document.querySelectorAll('.indPlayers');
-    for (let i = 0; i < check.length; i++){
+    for (let i = 0; i < check.length; i++) {
         // let player = check[i].getAttribute('class');
-        if(nameTitleEl.classList.contains(`player${i+1}`)){
-            nameTitleEl.classList.remove(`player${i+1}`);
+        if (nameTitleEl.classList.contains(`player${i + 1}`)) {
+            nameTitleEl.classList.remove(`player${i + 1}`);
             check[i].textContent = text.value;
             text.value = '';
         }
