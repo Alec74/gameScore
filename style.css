@@ -44,12 +44,28 @@
     color: white;
 }
 
+.navbar-toggler-icon {
+    height: auto;
+    vertical-align: 0%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: black;
+}
+
+.navbar-toggler {
+    background-color: white;
+}
+
 .navbtn {
     color: #cbf3f8;
 }
 
 .navbtn:hover {
     color: grey;
+}
+
+.hide {
+    display: none;
 }
 
 @media only screen and (max-width: 378px) {

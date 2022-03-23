@@ -352,13 +352,32 @@ playerNameSubmit.addEventListener('click', function (e) {
     }
 });
 
+let text = document.querySelector('#playerName');
+text.addEventListener('keyup', function (e) {
+    if (e.key === 'Enter') {
+        let nameTitleEl = document.querySelector(`.name-title`);
+        let text = document.querySelector('#playerName');
+        if (text.value) {
+            let check = document.querySelectorAll('.indPlayers');
+            for (let i = 0; i < check.length; i++) {
+                if (nameTitleEl.classList.contains(`player${i + 1}`)) {
+                    nameTitleEl.classList.remove(`player${i + 1}`);
+                    check[i].textContent = text.value;
+                    text.value = '';
+                };
+            };
+        };
+        $('#nameModal').modal('hide');
+    };
+});
+
 let playerNameClose = document.querySelector('.closeName');
-playerNameClose.addEventListener('click', function(){
+playerNameClose.addEventListener('click', function () {
     let text = document.querySelector('#playerName');
     text.value = '';
-})
+});
 
 $('#nameModal').on('shown.bs.modal', function () {
     $('#playerName').focus();
-})
+});
 
