@@ -17,13 +17,46 @@
 .indPlayers {
     font-size: larger;
     color: white;
-    background-color: black;
+    background-color: #17a2b8;
     border-radius: 4px;
     font-weight: bold;
     padding: 10px 10px 10px 10px;
 }
 
 .indPlayers:hover {
-    color: #00ff20;
+    color: #000000;
     cursor: pointer;
 }
+
+.addBtn {
+    margin-left: 50px;
+}
+
+.scoreTxt {
+    margin-left: 50px;
+}
+
+/* .navbar-dark {
+    color: white;
+} */
+
+.navTitle {
+    color: white;
+}
+
+.navbtn {
+    color: #cbf3f8;
+}
+
+.navbtn:hover {
+    color: grey;
+}
+
+@media only screen and (max-width: 378px) {
+    .addBtn {
+        margin-left: 10px;
+    }
+    .scoreTxt {
+        margin-left: 10px;
+    }
+  }

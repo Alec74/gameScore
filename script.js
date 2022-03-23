@@ -171,7 +171,7 @@ const handleFormSubmit = (n, array, names = []) => {
         // indPlayer.setAttribute('data-target', '#nameModal');
         // indPlayer.setAttribute('data-toggle', 'modal');
         // indPlayer.setAttribute('id', 'modal-link');
-        // indPlayer.classList.add('indPlayers');
+        indPlayer.classList.add('aTag');
         // indPlayer.classList.add('modalbtn');
         // indPlayer.classList.add(`player${i + 1}`);
         if (names.length > 0) {
@@ -200,7 +200,7 @@ const handleFormSubmit = (n, array, names = []) => {
         add.setAttribute('id', 'modal-link');
         add.setAttribute('type', 'button');
         add.textContent = 'Add';
-        add.style = "margin-left:50px;";
+        // add.style = "margin-left:50px;";
         add.addEventListener('click', function () {
             let playerNum = document.querySelector('.modal-title');
             playerNum.classList.add(`player${i + 1}`);
@@ -217,7 +217,7 @@ const handleFormSubmit = (n, array, names = []) => {
         } else {
             score.innerHTML = array[i];
         };
-        score.style = "margin-left:50px;";
+        // score.style = "margin-left:50px;";
         score.classList.add('scoreTxt');
         player.append(indPlayer);
         player.append(add);
@@ -339,13 +339,26 @@ playerNameSubmit.addEventListener('click', function (e) {
     e.preventDefault();
     let nameTitleEl = document.querySelector(`.name-title`);
     let text = document.querySelector('#playerName');
-    let check = document.querySelectorAll('.indPlayers');
-    for (let i = 0; i < check.length; i++) {
-        // let player = check[i].getAttribute('class');
-        if (nameTitleEl.classList.contains(`player${i + 1}`)) {
-            nameTitleEl.classList.remove(`player${i + 1}`);
-            check[i].textContent = text.value;
-            text.value = '';
+    if (text.value) {
+        let check = document.querySelectorAll('.indPlayers');
+        for (let i = 0; i < check.length; i++) {
+            // let player = check[i].getAttribute('class');
+            if (nameTitleEl.classList.contains(`player${i + 1}`)) {
+                nameTitleEl.classList.remove(`player${i + 1}`);
+                check[i].textContent = text.value;
+                text.value = '';
+            }
         }
     }
+});
+
+let playerNameClose = document.querySelector('.closeName');
+playerNameClose.addEventListener('click', function(){
+    let text = document.querySelector('#playerName');
+    text.value = '';
 })
+
+$('#nameModal').on('shown.bs.modal', function () {
+    $('#playerName').focus();
+})
+
